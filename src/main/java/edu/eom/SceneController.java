@@ -45,26 +45,17 @@ public class SceneController  implements Initializable{
 		
 	
 		if(antsNumTF.getText().trim().isEmpty()) {
-			logArea.appendText("\nНе все поля заполнены.\n");
+			logArea.appendText("\nNot all field are filled.\n");
 			return;
 		}
 	
 		if(!antsNumTF.getText().matches("[-+]?\\d+")) {
-			logArea.appendText("\nНеправильный формат.\n");
+			logArea.appendText("\nWrong format.\n");
 			return;
 		}
 		
 		antsNum = Integer.parseInt(antsNumTF.getText());
-		/*boolean revers = false;
-		for(int i = 0; i < vertNum; i++) {
-			for(int j = 0; j < vertNum; j++) {
-				if(j%2 == 0)
-					revers = false;
-				else 
-					revers = true;
-				graphVertices[i].drawPath(graphVertices[j], graphPane, revers);
-			}
-		}*/
+		
 		
 		ACO(antsNum);
 	}
@@ -79,10 +70,10 @@ public class SceneController  implements Initializable{
 		for(int a = 0; a < antsNumber; a++) {
 			bestPath = pathFinder(pheromone, pherVolat);
 			if(bestPath != null) {
-				logArea.appendText("Путь");
+				logArea.appendText("ГЏГіГІГј");
 				for(int i = 0; i < bestPath.size(); i++) 
 					logArea.appendText(" " + bestPath.get(i).getVertexNumber());
-				logArea.appendText(" найден муравьем " + a + ".\n");
+				logArea.appendText(" found by ant " + a + ".\n");
 				
 				graphPane.getChildren().clear();
 				initDefaultGraph();
@@ -112,7 +103,6 @@ public class SceneController  implements Initializable{
 				
 			found = false;
 			if(!whereToGo(possiblePaths[curVertex], flags)) {
-				//logArea.appendText("\nТупик!");
 				return null;
 			}
 			while(!found) {
@@ -126,7 +116,7 @@ public class SceneController  implements Initializable{
 				if(candidates.size() != 0) {
 					int curWinner = randInt(0, candidates.size()-1);
 					path.add(candidates.get(curWinner));
-					possiblePaths[curVertex][candidates.get(curWinner).getVertexNumber()-1] += p * i;// добавляем феромон 
+					possiblePaths[curVertex][candidates.get(curWinner).getVertexNumber()-1] += p * i;// adding pheromone 
 					curVertex = candidates.get(curWinner).getVertexNumber()-1;					
 					flags[curVertex] = true;
 					found = true;
@@ -137,7 +127,7 @@ public class SceneController  implements Initializable{
 			for(int row = 0; row < vertNum; row++)
 				for(int col = 0; col < vertNum; col++) {
 					if(possiblePaths[row][col] > 0)
-						possiblePaths[row][col] -= pv;// испарение феромона
+						possiblePaths[row][col] -= pv;// evaporation of pheromone
 				}
 		}
 		
